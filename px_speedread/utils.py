@@ -1,5 +1,7 @@
-words_per_line = lambda words_in_lines, num_lines: int(words_in_lines/num_lines)
-lines_per_page = lambda lines_in_pages, num_pages: int(lines_in_pages/num_pages)
+from math import floor
+
+words_per_line = lambda words_in_lines, num_lines: floor(words_in_lines/num_lines)
+lines_per_page = lambda lines_in_pages, num_pages: floor(lines_in_pages/num_pages)
 
 
 def avg_words_per_page(
