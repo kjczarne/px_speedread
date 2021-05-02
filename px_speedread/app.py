@@ -70,7 +70,7 @@ class Defaults:
     heading_style: ClassVar[dict] = {"text-align": "center"}
     link_style: ClassVar[dict] = {"text-align": "center", "font-size": "25px"}
     paragraph_style: ClassVar[dict] = {"text-align": "justify"}
-    contact_info_style: ClassVar[dict] = {"text-align": "center"}
+    center_div_style: ClassVar[dict] = {"text-align": "center"}
     centered_notice: ClassVar[dict] = {
         "text-align": "center",
         "font-weight": "bold"
@@ -147,24 +147,34 @@ def on_show_baseline(is_on):
                         html.Br(),
                         "Number of lines",
                         html.Br(),
-                        dcc.Input(id='num-lines-thresh-input'),
+                        dcc.Input(
+                            id='num-lines-thresh-input',
+                            value=5
+                        ),
                         html.Br(),
                         "Number of pages",
                         html.Br(),
-                        dcc.Input(id='num-pages-thresh-input'),
+                        dcc.Input(
+                            id='num-pages-thresh-input',
+                            value=5
+                        ),
                         html.Br()
                     ]
                 ),
                 html.Li(
                     id='num-words-li',
                     children=[
-                        dcc.Input(id='num-words-per-line-input')
+                        dcc.Input(
+                            id='num-words-per-line-input'
+                        )
                     ]
                 ),
                 html.Li(
                     id='num-lines-li',
                     children=[
-                        dcc.Input(id='num-lines-per-page-input')
+                        dcc.Input(
+                            id='num-lines-per-page-input'
+                        )
                     ]
                 ),
             ]
@@ -176,7 +186,7 @@ def on_show_baseline(is_on):
                 children=[]
             )
         ])
-    ])
+    ], style=Defaults.center_div_style)
     return on_show(is_on, cv)
 
 
@@ -187,7 +197,8 @@ def on_show_baseline(is_on):
 def on_thresh_specified_words(thresh):
     return [
         f"Calculate the number of words in {thresh} lines:",
-        dcc.Input(id='num-words-per-line-input'),
+        html.Br(),
+        dcc.Input(id='num-words-per-line-input')
     ]
 
 
@@ -198,6 +209,7 @@ def on_thresh_specified_words(thresh):
 def on_thresh_specified_lines(thresh):
     return [
         f"Calculate the number of lines in {thresh} pages:",
+        html.Br(),
         dcc.Input(id='num-lines-per-page-input')
     ]
 
@@ -210,12 +222,12 @@ def on_thresh_specified_lines(thresh):
     Input('num-words-per-line-input', 'value')
 )
 def calculate_wpm(thresh_pages, thresh_lines, num_lines_per_page, num_words_per_line):
-    return avg_words_per_page(
-        int(num_words_per_line),
-        int(num_lines_per_page),
+    return html.B(avg_words_per_page(
+        int(num_words_per_line) if num_words_per_line else 0,
+        int(num_lines_per_page) if num_lines_per_page else 0,
         int(thresh_lines),
         int(thresh_pages)
-    )
+    ), style=Defaults.heading_style)
 
 
 @app.callback(
