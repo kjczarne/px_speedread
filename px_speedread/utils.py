@@ -1,7 +1,7 @@
 from math import floor
 
-words_per_line = lambda words_in_lines, num_lines: floor(words_in_lines/num_lines)
-lines_per_page = lambda lines_in_pages, num_pages: floor(lines_in_pages/num_pages)
+f_words_per_line = lambda words_in_lines, num_lines: floor(words_in_lines/num_lines)
+f_lines_per_page = lambda lines_in_pages, num_pages: floor(lines_in_pages/num_pages)
 
 
 def avg_words_per_page(
@@ -21,8 +21,8 @@ def avg_words_per_page(
         num_pages (int): number of pages lines were counted for
                          (default 5)
     """
-    wpl = words_per_line(words_in_lines, num_lines)
-    lpp = lines_per_page(lines_in_pages, num_pages)
+    wpl = f_words_per_line(words_in_lines, num_lines)
+    lpp = f_lines_per_page(lines_in_pages, num_pages)
     return wpl * lpp
 
 
@@ -37,7 +37,7 @@ def words_per_minute(
         words_per_line (int): words per line in the test book
         minutes_spent (int): how many minutes you've spent reading
     """
-    return lines_read * words_per_line / minutes_spent
+    return floor(lines_read * words_per_line / minutes_spent)
 
 
 def time_per_line(
